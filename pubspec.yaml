@@ -1,0 +1,28 @@
+name: dart_raylib_raygui
+description: raylib is a simple and easy-to-use library to enjoy videogames programming.
+version: 0.0.0+1
+repository: https://github.com/Itterum/dart_raylib_raygui.git
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  path: ^1.9.0
+  ffi: ^2.1.4
+
+dev_dependencies:
+  ffigen: ^19.1.0
+  lints: ^6.0.0
+  test: ^1.25.6
+
+ffigen:
+  name: Raylib
+  description: Bindings to Raylib + Raygui
+  output: lib/src/generated_bindings.dart
+  comments:
+    style: any
+    length: full
+  headers:
+    entry-points:
+      - native/build/raylib.h
+      - native/build/raygui.h
