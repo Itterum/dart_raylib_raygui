@@ -1,2 +1,12 @@
-export 'modules/modules.dart';
+export 'classes/camera_2d.dart';
+export 'classes/camera_3d.dart';
+export 'classes/color.dart';
 export 'classes/rectangle.dart';
+export 'classes/render_texture.dart';
+export 'classes/shader.dart';
+export 'classes/texture.dart';
+export 'classes/vector2.dart';
+export 'classes/vector3.dart';
+export 'enums/blend_mode.dart';
+export 'enums/pixel_format.dart';
+export 'modules/modules.dart';
