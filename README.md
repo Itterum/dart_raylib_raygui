@@ -12,7 +12,7 @@
 
 2. Build the DLL:
    ```bash
-   uv run build_raylib_raygui.py
+   dart run build_raylib_raygui.dart
    ```
 
 3. (Optional) Regenerate bindings:
