@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 
 import '../../../utils/native_type.dart';
+import '../../../utils/pointer_list.dart';
 import '../../generated_bindings.dart' as raylib;
 
 class Rectangle extends NativeClass<raylib.Rectangle> {
@@ -30,4 +31,22 @@ class Rectangle extends NativeClass<raylib.Rectangle> {
 
   double get y => ref.y;
   set y(double y) => ref.y = y;
+}
+
+extension RectangleList on PointerList<raylib.Rectangle> {
+  Rectangle operator [](int index) {
+    return Rectangle.fromRef(pointer.elementAt(index).ref);
+  }
+
+  void operator []=(int index, Rectangle value) {
+    _setRef(pointer.elementAt(index).ref, value);
+  }
+
+  void _setRef(raylib.Rectangle ref, Rectangle value) {
+    ref
+      ..height = value.ref.height
+      ..width = value.ref.width
+      ..x = value.ref.x
+      ..y = value.ref.y;
+  }
 }
