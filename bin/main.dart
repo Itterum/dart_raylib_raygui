@@ -1,7 +1,7 @@
 import 'package:dart_raylib_raygui/raylib_raygui/raylib_raygui.dart';
 
 void main() {
-  initLibrary(windows: 'native\\build\\raylib_raygui.dll');
+  initLibrary(windows: 'native\\build\\raylib_raygui.dll', linux: 'native/build/libraylib_raygui.so');
 
   initWindow(800, 600, 'Dart Raylib Raygui');
 
