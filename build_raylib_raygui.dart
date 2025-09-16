@@ -71,7 +71,7 @@ Future<void> prepareBuild() async {
   print('Создан: $rayguiCPath');
 }
 
-Future<void> buildDll() async {
+Future<void> buildLibrary() async {
   final files = [
     'rcore.c',
     'rshapes.c',
@@ -84,23 +84,43 @@ Future<void> buildDll() async {
     'raygui.c',
   ];
 
-  final cmd = [
+  final os = Platform.operatingSystem;
+  final outputName = os == 'windows' ? 'raylib_raygui.dll' : 'libraylib_raygui.so';
+
+  final cmd = <String>[
     'gcc',
     '-shared',
+    '-fPIC',
     '-o',
-    'raylib_raygui.dll',
+    outputName,
     ...files,
     '-I.',
-    '-Iexternal',
     '-Iexternal/glfw/include',
     '-DPLATFORM_DESKTOP',
     '-DGRAPHICS_API_OPENGL_33',
-    '-lopengl32',
-    '-lgdi32',
-    '-lwinmm',
-    '-static-libgcc',
-    '-Wl,--export-all-symbols',
   ];
+
+  if (os == 'windows') {
+    cmd.addAll([
+      '-lopengl32',
+      '-lgdi32',
+      '-lwinmm',
+      '-static-libgcc',
+      '-Wl,--export-all-symbols',
+    ]);
+  } else if (os == 'linux') {
+    cmd.addAll([
+      '-lGL',
+      '-lm',
+      '-lpthread',
+      '-ldl',
+      '-lrt',
+      '-lX11',
+      '-D_GLFW_X11',
+    ]);
+  } else {
+    throw Exception('Unsupported OS: $os');
+  }
 
   await run(cmd, cwd: buildDir);
 }
@@ -114,5 +134,5 @@ Future<void> main() async {
   await cloneRepo(rayguiRepo, rayguiDir);
 
   await prepareBuild();
-  await buildDll();
+  await buildLibrary();
 }
